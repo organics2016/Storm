@@ -17,12 +17,8 @@ public class StormCache {
     private StormCache() {
     }
 
-    public static <T> void set(Class<T> type, String id, T obj) {
-        cache.computeIfAbsent(type, key -> {
-            Map<String, T> map = new ConcurrentHashMap<>();
-            map.put(id, obj);
-            return map;
-        });
+    public static <T> T set(Class<T> type, String id, T obj) {
+        return ((Map<String, T>) cache.computeIfAbsent(type, key -> new ConcurrentHashMap<String, T>())).put(id, obj);
     }
 
     public static <T> T get(Class<T> type, String id) {

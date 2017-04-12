@@ -7,8 +7,18 @@ public class MapTest {
 
 
     public static void main(String[] args) {
-//        StormCache.set(MapTest.class, "ddd", new MapTest());
 
-        System.out.println(StormCache.get(CopyTest.class,"ddd",false));
+        MapTest test = new MapTest();
+        StormCache.set(MapTest.class, "ddd", test);
+
+        System.out.println(test);
+        System.out.println(StormCache.get(MapTest.class, "ddd", false));
+
+        test = new MapTest();
+        StormCache.set(MapTest.class, "ddd", test);
+
+        System.out.println(test);
+        System.out.println(StormCache.get(MapTest.class, "ddd", false));
+
     }
 }
