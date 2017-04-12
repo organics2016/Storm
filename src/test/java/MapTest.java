@@ -20,5 +20,11 @@ public class MapTest {
         System.out.println(test);
         System.out.println(StormCache.get(MapTest.class, "ddd", false));
 
+        test = new MapTest();
+        StormCache.set(MapTest.class, "ddd", test);
+
+        System.out.println(test);
+        System.out.println(StormCache.get(MapTest.class, "ddd", false));
+
     }
 }
