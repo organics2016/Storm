@@ -1,0 +1,79 @@
+package com.organics.base.storm.tools;
+
+import java.io.*;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * Created by 王汗超 on 2017/4/10.
+ */
+public class StormCache {
+
+
+    private static final Map<Class<?>, Map<String, ?>> cache = new ConcurrentHashMap<>();
+
+    private StormCache() {
+    }
+
+    public static <T> void set(Class<T> type, String id, T obj) {
+        cache.computeIfAbsent(type, key -> {
+            Map<String, T> map = new ConcurrentHashMap<>();
+            map.put(id, obj);
+            return map;
+        });
+    }
+
+    public static <T> T get(Class<T> type, String id) {
+        return get(type, id, true);
+    }
+
+    public static <T> T get(Class<T> type, String id, boolean safe) {
+        Map<String, T> map = (Map<String, T>) cache.get(type);
+
+        if (map == null)
+            return null;
+
+        if (safe) {
+            return deepCopy(map.get(id));
+        } else {
+            return map.get(id);
+        }
+    }
+
+    public static <T> T deepCopy(T obj) {
+        if (obj == null)
+            return null;
+
+        ObjectOutputStream out = null;
+        ObjectInputStream in = null;
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            out = new ObjectOutputStream(bos);
+
+            out.writeObject(obj);
+
+            out.flush();
+
+            in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
+
+            return (T) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (in != null)
+                    in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null)
+                        out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+}
