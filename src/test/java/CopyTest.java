@@ -1,4 +1,4 @@
-import com.organics.base.storm.tools.StormCache;
+import com.organics.base.storm.cache.StormCache;
 
 import java.util.ArrayList;
 import java.util.HashMap;

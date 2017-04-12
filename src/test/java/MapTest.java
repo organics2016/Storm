@@ -1,4 +1,4 @@
-import com.organics.base.storm.tools.StormCache;
+import com.organics.base.storm.cache.StormCache;
 
 /**
  * Created by 王汗超 on 2017/4/12.
