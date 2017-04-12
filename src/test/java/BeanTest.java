@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,9 +9,9 @@ import java.util.Map;
 
 public class BeanTest implements Serializable {
 
-    private String aaa;
+    private String aaa = "xxx";
 
-    private List<Map<String, List<String>>> xxx;
+    private List<Map<String, List<String>>> xxx = new ArrayList<>();
 
 
     public String getAaa() {

@@ -12,7 +12,8 @@ public class CopyTest {
 
 
     public static void main(String[] args) {
-        BeanTest test = new BeanTest();
+
+        BeanTest2 test = new BeanTest2();
         test.setAaa("xxxx");
 
 
@@ -30,9 +31,11 @@ public class CopyTest {
 
         test.setXxx(xx);
 
+        StormCache.set(BeanTest.class, "111", test);
+
 
         long start = System.currentTimeMillis();
-        BeanTest beanTest2 = StormCache.deepCopy(test);
+        BeanTest beanTest2 = StormCache.get(BeanTest.class, "111");
         long end = System.currentTimeMillis();
 
         System.out.println(end - start);

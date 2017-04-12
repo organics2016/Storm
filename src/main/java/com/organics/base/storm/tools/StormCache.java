@@ -1,5 +1,7 @@
 package com.organics.base.storm.tools;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.io.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,10 +36,22 @@ public class StormCache {
             return null;
 
         if (safe) {
-            return deepCopy(map.get(id));
+
+            if (Serializable.class.isAssignableFrom(type))
+                return deepCopy(map.get(id));
+            else
+                return deepCopyJson(map.get(id));
+
         } else {
             return map.get(id);
         }
+    }
+
+    public static <T> T deepCopyJson(T obj) {
+        if (obj == null)
+            return null;
+
+        return JSONObject.parseObject(JSONObject.toJSONString(obj), (Class<T>) obj.getClass());
     }
 
     public static <T> T deepCopy(T obj) {
