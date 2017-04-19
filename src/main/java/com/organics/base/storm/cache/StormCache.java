@@ -71,14 +71,14 @@ public class StormCache {
             e.printStackTrace();
         } finally {
             try {
-                if (in != null)
-                    in.close();
+                if (out != null)
+                    out.close();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    if (out != null)
-                        out.close();
+                    if (in != null)
+                        in.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
